@@ -1,6 +1,7 @@
 # \<particle-party\>
 
 A configurable particle burst. For parties.
+Run demo: http://localhost:8080/components/particle-party/demo/
 
 ## Install the Polymer-CLI
 
