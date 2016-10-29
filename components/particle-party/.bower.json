@@ -1,0 +1,26 @@
+{
+  "name": "particle-party",
+  "description": "A configurable particle burst. For parties.",
+  "main": "particle-party.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "paper-slider": "PolymerElements/paper-slider#~1.0.12"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/mikegreer/particle-party",
+  "_release": "f5859ad4d8",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "f5859ad4d895eb6de0e708e26bd5137753818f69"
+  },
+  "_source": "git://github.com/mikegreer/particle-party.git",
+  "_target": "master",
+  "_originalSource": "mikegreer/particle-party",
+  "_direct": true
+}
