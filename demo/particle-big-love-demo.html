@@ -79,8 +79,13 @@
             this.like = !this.like;
             this.toggleClass('liked', this.like, this.$$('.like-icon'));
             if(this.like){
+                var snd = new Audio("../assets/bubbles-sound.wav");
+                snd.play();
                 var childElement = Polymer.dom(this.root).querySelector('particle-party');
                 childElement.fire('fireAnimation');
+                setTimeout(function(){
+                    childElement.fire('fireAnimation');
+                }, 250);
             }
         },
         attached: function() {

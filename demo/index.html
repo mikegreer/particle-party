@@ -21,7 +21,17 @@
             justify-content: center;
             flex-direction: column;
             height: 100vh;
+            position: relative;
             border-bottom: 1px solid #f0f0f0;
+        }
+        .party-bus h1{
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 10px;
+            font-size: 64px;
+            margin: 0;
+            font-family: "helvetica-neue", helvetica, arial, sans-serif;
         }
         .fountain-container{
             height: 100px;
@@ -37,29 +47,36 @@
             border: 1px solid #f0f0f0;
             padding: 40px;
             text-align: center;
-            font-family: arial;
+            font-family: "helvetica-neue", helvetica, arial, sans-serif;
             font-size: 10px;
             margin-top: 70px;
+        }
+        paper-slider.fountain{
+            --paper-slider-active-color: #ff9933;
+            --paper-slider-knob-color: #ffBB11;
+            --paper-slider-container-color: #333;
         }
     </style>
   </head>
   <body>
       <div class="party-bus">
+          <h1>balloon</h1>
           <particle-party-demo></particle-party-demo>
       </div>
       <div class="party-bus">
+          <h1>fountain</h1>
           <div class="fountain-container">
               <particle-fountain-demo number-particles="5"></particle-fountain-demo>
           </div>
           <div class="fountain-settings">
               <p>Number of particles</p>
-              <paper-slider id="particleCount" min="0" max="50" value="5"></paper-slider>
+              <paper-slider class="fountain" id="particleCount" min="0" max="50" value="5"></paper-slider>
               <p>Size of particles</p>
-              <paper-slider id="particleSize" min="0" max="50" value="10"></paper-slider>
+              <paper-slider class="fountain" id="particleSize" min="0" max="50" value="10"></paper-slider>
           </div>
-
       </div>
       <div class="party-bus">
+          <h1>love</h1>
           <particle-big-love-demo></particle-big-love-demo>
       </div>
         <script>

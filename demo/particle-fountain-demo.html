@@ -39,28 +39,12 @@
                  type: Number,
                  value: 10,
                  reflectToAttribute: true
-             },
-            // gravity: {
-            //     type: Number,
-            //     value: 0.3,
-            //     reflectToAttribute: true
-            // },
-            // particleDecay: {
-            //     type: Number,
-            //     value: 0.02,
-            //     reflectToAttribute: true
-            // },
-            // maxParticleSize: {
-            //     type: Number,
-            //     value: 10,
-            //     reflectToAttribute: true
-            // }
+             }
         },
         attached: function() {
             var childElement = Polymer.dom(this.root).querySelector('particle-party');
 
             setInterval(function(){
-                //childElement.setAttribute('number-particles', Math.floor(Math.random()*50));
                 childElement.setAttribute('gravity', Math.random() * 0.4 + 0.1);
                 childElement.setAttribute('particle-decay', Math.random()*0.04);
                 childElement.fire('fireAnimation');
