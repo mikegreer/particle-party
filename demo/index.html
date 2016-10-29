@@ -5,16 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../../paper-slider/paper-slider.html">
 
+    <link rel="import" href="../particle-party.html">
     <link rel="import" href="particle-party-demo.html">
     <link rel="import" href="particle-fountain-demo.html">
     <link rel="import" href="particle-big-love-demo.html">
 
-    <style is="custom-style">
+    <style is="custom-style" include="demo-pages-shared-styles">
         .party-bus{
             display: flex;
             align-items: center;
@@ -59,26 +59,29 @@
     </style>
   </head>
   <body>
-      <div class="party-bus">
-          <h1>balloon</h1>
-          <particle-party-demo></particle-party-demo>
-      </div>
-      <div class="party-bus">
-          <h1>fountain</h1>
-          <div class="fountain-container">
-              <particle-fountain-demo number-particles="5"></particle-fountain-demo>
+      <!-- <div class="vertical-section-container centered"> -->
+          <div class="party-bus">
+              <h1>balloon</h1>
+              <particle-party-demo></particle-party-demo>
           </div>
-          <div class="fountain-settings">
-              <p>Number of particles</p>
-              <paper-slider class="fountain" id="particleCount" min="0" max="50" value="5"></paper-slider>
-              <p>Size of particles</p>
-              <paper-slider class="fountain" id="particleSize" min="0" max="50" value="10"></paper-slider>
+          <div class="party-bus">
+              <h1>fountain</h1>
+              <div class="fountain-container">
+                  <particle-fountain-demo number-particles="5"></particle-fountain-demo>
+              </div>
+              <div class="fountain-settings">
+                  <p>Number of particles</p>
+                  <paper-slider class="fountain" id="particleCount" min="0" max="50" value="5"></paper-slider>
+                  <p>Size of particles</p>
+                  <paper-slider class="fountain" id="particleSize" min="0" max="50" value="10"></paper-slider>
+              </div>
           </div>
-      </div>
-      <div class="party-bus">
-          <h1>love</h1>
-          <particle-big-love-demo></particle-big-love-demo>
-      </div>
+          <div class="party-bus">
+              <h1>love</h1>
+              <particle-big-love-demo></particle-big-love-demo>
+          </div>
+      <!-- </div> -->
+
         <script>
         document.addEventListener('WebComponentsReady', function() {
             var particleCount = document.querySelector('#particleCount');
