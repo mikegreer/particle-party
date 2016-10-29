@@ -33,6 +33,10 @@ A configurable particle burst. For parties.
                 value: 0.02,
                 reflectToAttribute: true
             },
+            particles: {
+              type: Array,
+              value: function() { return []; }
+            },
         },
         listeners: {
             'fireAnimation': 'triggerParticles'
@@ -44,7 +48,6 @@ A configurable particle burst. For parties.
                 offsets.top + window.scrollY + (offsets.height / 2)
             );
         },
-        particles: [],
         idCount: 0,
         origin: {
             x: 0,
@@ -54,26 +57,29 @@ A configurable particle burst. For parties.
             width: 600,
             height: 300
         },
-        generateParticles: function(_x, _y) {
-            //this.toggleClass('burst', true, this.$.particles);
+        generateParticles: function (_x, _y) {
+            var playing = this.particles.length > 0 ? true : false;
             var x = _x,
                 y = _y,
                 svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             svg.setAttribute("height", this.svgWrap.width);
             svg.setAttribute("width", this.svgWrap.height);
+            svg.setAttribute("class", "particle-container");
             svg.setAttribute("style", "position: absolute; top: " + (y - (this.svgWrap.width / 2)) + "; left: " + (x - (this.svgWrap.height / 2)) + ";");
-            svg.setAttribute("id", "outer" + this.idCount);
+            var containerCount = document.getElementsByClassName('particle-container').length;
             for (var i = 0; i < this.numberParticles; i++) {
                 var radius = Math.random() * 10;
+                var uniqueId = 'inner' + containerCount + this.idCount;
+                this.idCount ++;
                 var newParticle = {
-                    x: -radius,
-                    y: -radius,
+                    x: -radius + 150,
+                    y: -radius + 300,
                     r: radius,
                     dx: Math.random() * 6 - 3,
                     dy: Math.random() * -10,
                     color: '#' + Math.floor(Math.random() * 77215 + 16700000).toString(16),
-                    id: this.idCount,
-                    scale: 1
+                    id: uniqueId,
+                    scale: 1,
                 }
                 this.particles.push(newParticle);
                 var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -81,12 +87,13 @@ A configurable particle burst. For parties.
                 circle.setAttribute("cy", newParticle.r);
                 circle.setAttribute("r", newParticle.r);
                 circle.setAttribute("fill", newParticle.color);
-                circle.setAttribute("id", "inner" + this.idCount);
+                circle.setAttribute("id", uniqueId);
                 svg.appendChild(circle);
-                document.body.appendChild(svg);
-                this.idCount++;
             }
-            this.animateTick();
+            document.body.appendChild(svg);
+            if(!playing){
+                this.animateTick();
+            }
         },
         animateTick: function() {
             var particles = this.particles;
@@ -95,8 +102,8 @@ A configurable particle burst. For parties.
             }
             for (var i = 0; i < particles.length; i++) {
                 p = particles[i];
-                var inner = document.getElementById('inner' + p.id);
-                inner.setAttribute("transform", "translate(" + (p.x + (this.svgWrap.height / 2)) + ", " + (p.y + (this.svgWrap.width / 2)) + ") scale(" + p.scale + ", " + p.scale + ")");
+                var inner = document.getElementById(p.id);
+                inner.setAttribute("transform", "translate(" + p.x + ", " + p.y + ") scale(" + p.scale + ", " + p.scale + ")");
                 p.x += p.dx;
                 p.y += p.dy;
                 p.dy += this.gravity;
@@ -111,15 +118,7 @@ A configurable particle burst. For parties.
                     }
                 }
             }
-        },
-        // attached: function() {
-        //     var offsets = this.$.particles.getBoundingClientRect();
-        //     // this.toggleClass('burst', false, this.$.particles);
-        //     this.generateParticles(
-        //         offsets.left + window.scrollX + (offsets.width / 2),
-        //         offsets.top + window.scrollY + (offsets.height / 2)
-        //     );
-        // }
+        }
     });
 </script>
 </dom-module>
