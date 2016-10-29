@@ -1,6 +1,4 @@
-<link rel="import" href="../../polymer/polymer.html">
 <link rel="import" href="../particle-party.html">
-
 
 <dom-module id="particle-party-demo">
   <template>
@@ -10,22 +8,16 @@
           align-items: center;
           justify-content: center;
       }
-      @keyframes tremble {
-          0% {margin-left: -2px; margin-top: 2px;}
-          50% {margin-left: 2px; margin-top: -2px}
-          100% {margin-left: -2px;margin-top: 0px;}
-      }
       particle-party{
-            width: 20px;
-            height: 20px;
+            width: 40px;
+            height: 40px;
             margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50px;
-            background-color: #ffea44;
-            transition: all 300ms cubic-bezier(0.390, 0.575, 0.565, 1.000);
-            animation: tremble 100ms infinite;
+            position: absolute;
+            background-image: -moz-radial-gradient(45px 45px 45deg, circle cover, red 0%, orange 100%, red 95%);
+        	background-image: -webkit-radial-gradient(45px 45px, circle cover, red, orange);
+        	background-image: radial-gradient(45px 45px 45deg, circle cover, red 0%, orange 100%, red 95%);
+        	border-radius: 50%;
+            transition: all 900ms cubic-bezier(0.390, 0.575, 0.565, 1.000);
       }
       particle-party.burst{
           width: 0;
@@ -36,43 +28,54 @@
     </style>
 
     <div class="particle-repeater">
-        <particle-party></particle-party>
+        <particle-party
+            max-particle-size="30"
+            particle-decay="0.04"
+            gravity="0"
+            initial-velocity="0"
+            particle-speed="20"></particle-party>
     </div>
-
-
 
   </template>
 
   <script>
     Polymer({
         is: "particle-party-demo",
-        fireEvent: function(fav) {
-            console.log('firing up the particle party');
+        listeners: {
+            'tap': 'balloonBurst',
         },
-        attached: function() {
-            var childElement = Polymer.dom(this.root).querySelector('particle-party');
-
-            function playSequence(_this){
-                // childElement.setAttribute('number-particles', Math.floor(Math.random()*50));
-                // childElement.setAttribute('gravity', Math.random() * 0.4 + 0.1);
-                // childElement.setAttribute('particle-decay', Math.random()*0.04);
-                childElement.setAttribute('number-particles', 30);
-                childElement.setAttribute('gravity', .2);
-                childElement.setAttribute('particle-decay', 0.01);
-
-                setTimeout(function(){
-                    _this.$$('particle-party').toggleClass('burst');
-                    childElement.fire('fireAnimation');
-                }.bind(_this), 800);
-                setTimeout(function(){
-                    _this.$$('particle-party').toggleClass('burst');
-                }.bind(_this), 1200);
-            };
-            playSequence(this);
-            setInterval(function(){
-                playSequence(this);
-            }.bind(this), 1200)
+        balloonBurst: function(e) {
+            this.$$('particle-party').toggleClass('burst');
+            //this.toggleClass('liked', this.like, this.$$('like-icon'));
+            Polymer.dom(this.root).querySelector('particle-party').fire('fireAnimation');
+            setTimeout(function(){
+                this.$$('particle-party').toggleClass('burst');
+            }.bind(this), 800);
         },
+        // attached: function() {
+        //     var childElement = Polymer.dom(this.root).querySelector('particle-party');
+        //
+        //     function playSequence(_this){
+        //         childElement.setAttribute('number-particles', Math.floor(Math.random()*30)+6);
+        //         //childElement.setAttribute('gravity', Math.random() * 0.4);
+        //         //childElement.setAttribute('particle-decay', Math.random()*0.05 + 0.01);
+        //         // childElement.setAttribute('number-particles', 30);
+        //         // childElement.setAttribute('gravity', .2);
+        //         // childElement.setAttribute('particle-decay', 0.01);
+        //
+        //         // setTimeout(function(){
+        //         //     _this.$$('particle-party').toggleClass('burst');
+        //         //     childElement.fire('fireAnimation');
+        //         // }.bind(_this), 800);
+        //         // setTimeout(function(){
+        //         //     _this.$$('particle-party').toggleClass('burst');
+        //         // }.bind(_this), 2000);
+        //     };
+        //     playSequence(this);
+        //     setInterval(function(){
+        //         playSequence(this);
+        //     }.bind(this), 2000)
+        // },
     });
   </script>
 </dom-module>

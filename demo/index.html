@@ -8,23 +8,72 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../paper-slider/paper-slider.html">
 
     <link rel="import" href="particle-party-demo.html">
+    <link rel="import" href="particle-fountain-demo.html">
+    <link rel="import" href="particle-big-love-demo.html">
 
-    <style is="custom-style" include="demo-pages-shared-styles">
+    <style is="custom-style">
         .party-bus{
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 85vh;
+            flex-direction: column;
+            height: 100vh;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .fountain-container{
+            height: 100px;
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .fountain-settings{
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 4px;
+            border: 1px solid #f0f0f0;
+            padding: 40px;
+            text-align: center;
+            font-family: arial;
+            font-size: 10px;
+            margin-top: 70px;
         }
     </style>
   </head>
   <body>
       <div class="party-bus">
           <particle-party-demo></particle-party-demo>
+      </div>
+      <div class="party-bus">
+          <div class="fountain-container">
+              <particle-fountain-demo number-particles="5"></particle-fountain-demo>
+          </div>
+          <div class="fountain-settings">
+              <p>Number of particles</p>
+              <paper-slider id="particleCount" min="0" max="50" value="5"></paper-slider>
+              <p>Size of particles</p>
+              <paper-slider id="particleSize" min="0" max="50" value="10"></paper-slider>
+          </div>
 
       </div>
-  <particle-party-demo></particle-party-demo>
-  </body>
+      <div class="party-bus">
+          <particle-big-love-demo></particle-big-love-demo>
+      </div>
+        <script>
+        document.addEventListener('WebComponentsReady', function() {
+            var particleCount = document.querySelector('#particleCount');
+            particleCount.addEventListener('immediate-value-change', function() {
+                document.querySelector('particle-fountain-demo').setAttribute('number-particles', particleCount.immediateValue);
+            });
+
+            var particleSize = document.querySelector('#particleSize');
+            particleSize.addEventListener('immediate-value-change', function() {
+                document.querySelector('particle-fountain-demo').setAttribute('max-particle-size', particleSize.immediateValue);
+            });
+        });
+        </script>
+    </body>
 </html>

@@ -33,6 +33,21 @@ A configurable particle burst. For parties.
                 value: 0.02,
                 reflectToAttribute: true
             },
+            maxParticleSize: {
+                type: Number,
+                value: 10,
+                reflectToAttribute: true
+            },
+            initialVelocity: {
+                type: Number,
+                value: 5,
+                reflectToAttribute: true
+            },
+            particleSpeed: {
+                type: Number,
+                value: 10,
+                reflectToAttribute: true
+            },
             particles: {
               type: Array,
               value: function() { return []; }
@@ -59,41 +74,43 @@ A configurable particle burst. For parties.
         },
         generateParticles: function (_x, _y) {
             var playing = this.particles.length > 0 ? true : false;
-            var x = _x,
-                y = _y,
-                svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svg.setAttribute("height", this.svgWrap.width);
-            svg.setAttribute("width", this.svgWrap.height);
-            svg.setAttribute("class", "particle-container");
-            svg.setAttribute("style", "position: absolute; top: " + (y - (this.svgWrap.width / 2)) + "; left: " + (x - (this.svgWrap.height / 2)) + ";");
-            var containerCount = document.getElementsByClassName('particle-container').length;
-            for (var i = 0; i < this.numberParticles; i++) {
-                var radius = Math.random() * 10;
-                var uniqueId = 'inner' + containerCount + this.idCount;
-                this.idCount ++;
-                var newParticle = {
-                    x: -radius + 150,
-                    y: -radius + 300,
-                    r: radius,
-                    dx: Math.random() * 6 - 3,
-                    dy: Math.random() * -10,
-                    color: '#' + Math.floor(Math.random() * 77215 + 16700000).toString(16),
-                    id: uniqueId,
-                    scale: 1,
+            if(this.particles.length < 500){
+                var x = _x,
+                    y = _y,
+                    svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("height", this.svgWrap.width);
+                svg.setAttribute("width", this.svgWrap.height);
+                svg.setAttribute("class", "particle-container");
+                svg.setAttribute("style", "position: absolute; top: " + (y - (this.svgWrap.width / 2)) + "; left: " + (x - (this.svgWrap.height / 2)) + ";");
+                var containerCount = document.getElementsByClassName('particle-container').length;
+                for (var i = 0; i < this.numberParticles; i++) {
+                    var radius = Math.random() * this.maxParticleSize;
+                    var uniqueId = 'inner' + containerCount + this.idCount;
+                    this.idCount ++;
+                    var newParticle = {
+                        x: -radius + 150,
+                        y: -radius + 300,
+                        r: radius,
+                        dx: Math.random() * (this.particleSpeed / 2) - (this.particleSpeed / 4),
+                        dy: (Math.random() * this.particleSpeed - (this.particleSpeed / 2)) - this.initialVelocity,
+                        color: '#' + Math.floor(Math.random() * 77215 + 16700000).toString(16),
+                        id: uniqueId,
+                        scale: 1,
+                    }
+                    this.particles.push(newParticle);
+                    var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    circle.setAttribute("cx", newParticle.r);
+                    circle.setAttribute("cy", newParticle.r);
+                    circle.setAttribute("r", newParticle.r);
+                    circle.setAttribute("fill", newParticle.color);
+                    circle.setAttribute("id", uniqueId);
+                    svg.appendChild(circle);
                 }
-                this.particles.push(newParticle);
-                var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                circle.setAttribute("cx", newParticle.r);
-                circle.setAttribute("cy", newParticle.r);
-                circle.setAttribute("r", newParticle.r);
-                circle.setAttribute("fill", newParticle.color);
-                circle.setAttribute("id", uniqueId);
-                svg.appendChild(circle);
-            }
-            document.body.appendChild(svg);
-            if(!playing){
-                this.animateTick();
-            }
+                document.body.appendChild(svg);
+                if(!playing){
+                    this.animateTick();
+                }
+            };
         },
         animateTick: function() {
             var particles = this.particles;
